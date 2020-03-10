@@ -38,12 +38,10 @@ class TowelsDataset(Dataset):
         bbox = np.array(self.labels.iloc[idx, 1:]).astype('float')
         # transform it to x, y, w, h
         sample = {'image': image, 'bbox': np.array([bbox[0], bbox[1],
-                  bbox[2] - bbox[0], bbox[3] - bbox[1]])}
+                  bbox[2], bbox[3]]), 'image_name': img_name}
 
         if self.custom_transform:
             sample = self.custom_transform(sample)
-
         if self.transform:
             sample['image'] = self.transform(sample['image'])
-
         return sample
